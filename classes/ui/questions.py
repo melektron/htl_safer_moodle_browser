@@ -27,7 +27,7 @@ class QuestionMark(Question):
         self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
 
 
-class Question(Question):
+class Questionasdf(Question):
     def __init__(self, master):
         super().__init__(master, "What is your FSST Mark?")
 
