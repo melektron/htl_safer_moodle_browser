@@ -52,10 +52,9 @@ class QuestionSmartPerson(Question):
     def __init__(self, master):
         super().__init__(master, "Are you smart?")
 
-        self.add(ctk.CTkLabel(self, text=""))
-        self.add(ctk.CTkSlider(self,from_=0,to=10,command=self.slider_change,number_of_steps=11))
+        self.add(ctk.CTkLabel(self, text="Rate yourself on a scale 1 to 10!"))
+        self.add(ctk.CTkSlider(self,from_=0,to=10,command=self.slider_change,number_of_steps=10))
 
 
-    def slider_change(self): 
-        value=self.elements[1].get() 
-        self.elements[0].configure(text="Current position: " + value)
+    def slider_change(self,value): 
+        self.elements[0].configure(text=str(int(value)))
