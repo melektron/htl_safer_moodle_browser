@@ -34,7 +34,7 @@ class QuestionStrongPassword(Question):
 
         self.add(ctk.CTkComboBox(
             self,
-            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo")
+            values=("P@ssw0rd!91", "gboquwbg48670OUHhughu#gq#", "M4tt30#Re1ter", "Matteo")
         ))
         self.add(ctk.CTkButton(self, text="test check", command=self.show_correct))
     
