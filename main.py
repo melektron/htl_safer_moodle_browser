@@ -9,10 +9,10 @@ def main():
     global main_window
     main_window = AppWindow()
     main_window.set_questions(
-        q.QuestionMark(main_window),
-        q.QuestionMark(main_window),
-        q.QuestionStrongPassword(main_window),
-        q.QuestionMark(main_window)
+        q.QuestionMark(main_window.question_area),
+        q.QuestionMark(main_window.question_area),
+        q.QuestionStrongPassword(main_window.question_area),
+        q.QuestionMark(main_window.question_area)
     )
     main_window.mainloop()
 

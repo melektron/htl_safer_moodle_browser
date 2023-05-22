@@ -8,6 +8,7 @@ from . import _styles as styles
 
 
 class AppWindow(ctk.CTk):
+    question_area: ctk.CTkScrollableFrame = None
     _questions: tuple[Question]
     _current_question: Question = None
     _current_question_index: int = 0
@@ -16,7 +17,6 @@ class AppWindow(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title(".")
-        self.geometry("600x350")
 
         # implement the annoying exit functionality
         # closing the window the normal way will do wired stuff
@@ -36,7 +36,10 @@ class AppWindow(ctk.CTk):
         self._lb_exam_title = ctk.CTkLabel(self, text="Solve this simple exam", font=styles.FONT_HEADER)
         self._lb_exam_title.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
 
-        # Question area initialized in set_questions()
+        # Question area 
+        self.question_area = ctk.CTkScrollableFrame(self, width=600, height=250)
+        self.question_area.grid_columnconfigure(0, weight=1)
+        self.question_area.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
         
         # Back button
         self._bt_back = ctk.CTkButton(self, text="Back", state="disabled", command=self._back_button_cb)
@@ -50,7 +53,6 @@ class AppWindow(ctk.CTk):
     def set_questions(self, *questions: Question):
         self._questions = questions
         self._show_question(self._questions[self._current_question_index]) # shows first question by default
-
 
     def _close_window_hook(self):
         """
@@ -77,8 +79,25 @@ class AppWindow(ctk.CTk):
         if self._current_question is not None:
             self._current_question.grid_forget()
         self._current_question = new_question
-        self._current_question.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10)
+        self._current_question.grid(row=0, column=0, sticky="nsew", padx=10)
 
+    def _show_question_answers(self):
+        # hide the current question
+        if self._current_question is not None:
+            self._current_question.grid_forget()
+        
+        # instead add all the questions
+        for row in range(len(self._questions)):
+            self._questions[row].grid(row=row, column=0, sticky="nsew", padx=10)
+
+        # make window larger
+        self.question_area.configure(height=800)
+        
+        # show all the answers
+        for question in self._questions:
+            question.show_correct()
+
+        
 
     def _next_button_cb(self):
         old_index = self._current_question_index
@@ -125,11 +144,14 @@ class AppWindow(ctk.CTk):
         self._bt_next.grid_forget()
         # change the title
         self._lb_exam_title.configure(text="Exam results")
+        # change space allocation
+        self.grid_rowconfigure(2, weight=0)
+        self.grid_rowconfigure(1, weight=1)
         
         # place the fake progress bar and start it
-        progress_question = q.QuestionLoading(self)
+        progress_question = q.QuestionLoading(self.question_area)
         self._show_question(progress_question)
-        progress_question.run_progress()
+        progress_question.run_progress(then=self._show_question_answers)
 
 
 

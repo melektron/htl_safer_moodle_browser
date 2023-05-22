@@ -10,7 +10,9 @@ www.elektron.work
 
 from ._question import Question
 import random as r
+import time as t
 import tkinter as tk
+import typing
 from tkinter import messagebox
 import customtkinter as ctk
 
@@ -55,9 +57,16 @@ class QuestionLoading(Question):
     def __init__(self, master):
         super().__init__(master, "Calculating results...")
 
-        self._pb_progress = ctk.CTkProgressBar(self, orientation="horizontal")
+        self._pb_progress = ctk.CTkProgressBar(self, orientation="horizontal", determinate_speed=0.5)
         self._pb_progress.grid(row=self.row_id, column=0, padx=10, sticky="we")
         self.row_id += 1
     
-    def run_progress(self):
+    def run_progress(self, then: typing.Callable):
+        self._pb_progress.set(0)
+
+        def stopfn():
+            self._pb_progress.stop()
+            then()
+        
         self._pb_progress.start()
+        self.after(2200, stopfn)
