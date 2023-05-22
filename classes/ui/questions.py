@@ -48,3 +48,14 @@ class QuestionStrongPassword(Question):
             messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
             return False
             
+class QuestionSmartPerson(Question): 
+    def __init__(self, master):
+        super().__init__(master, "Are you smart?")
+
+        self.add(ctk.CTkLabel(self, text=""))
+        self.add(ctk.CTkSlider(self,from_=0,to=10,command=self.slider_change,number_of_steps=11))
+
+
+    def slider_change(self): 
+        value=self.elements[1].get() 
+        self.elements[0].configure(text="Current position: " + value)
