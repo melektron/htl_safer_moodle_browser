@@ -5,7 +5,7 @@ import customtkinter as ctk
 class Question(ctk.CTkFrame):
     def __init__(self, master, text="??"):
         self.question_text = text
-        self.elements = []
+        self.elements: list[tk.Widget] = []
         self.row_id = 1  # starting at row 1
 
         super().__init__(master)
@@ -22,4 +22,8 @@ class Question(ctk.CTkFrame):
         self.elements.append(element)
         element.grid(row=self.row_id, column=0)
         self.row_id += 1
+
+
+    def show_correct(self) -> bool:
+        ...
 

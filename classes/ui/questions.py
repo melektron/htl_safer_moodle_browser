@@ -11,6 +11,7 @@ www.elektron.work
 from ._question import Question
 import random as r
 import tkinter as tk
+from tkinter import messagebox
 import customtkinter as ctk
 
 class QuestionMark(Question):
@@ -33,9 +34,17 @@ class QuestionStrongPassword(Question):
 
         self.add(ctk.CTkComboBox(
             self,
-            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo"),
-            command=self.sel_change
+            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo")
         ))
+        self.add(ctk.CTkButton(self, text="test check", command=self.show_correct))
     
-    def sel_change(self, selection):
-        print(selection)
+    def show_correct(self) -> bool:
+        if self.elements[0].get() == "Matteo":
+            self.elements[0].configure(border_color="green")    
+            messagebox.showinfo(self.question_text, "You are correct!")
+            return True
+        else:
+            self.elements[0].configure(border_color="red")
+            messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
+            return False
+            
