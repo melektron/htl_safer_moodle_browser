@@ -26,26 +26,40 @@ def normal_close():
 
 def show_question(new_question: Question):
     global current_question
+    if current_question is new_question:
+        return
     if current_question is not None:
         current_question.grid_forget()
     current_question = new_question
     current_question.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10)
 
-def next_question():
+def next_button_cb(bback: ctk.CTkButton, bnext: ctk.CTkButton):
     global question_index
-    question_index += 1
-    if question_index > len(questions) - 1:
-        question_index = len(questions) - 1
-        return# show check button
-    show_question(questions[question_index])
+    old_index = question_index
+    if question_index >= len(questions) - 1:
+        print("check")
+    else:
+        question_index += 1
+        show_question(questions[question_index])
+        # if we have reached the end, change the button to "Submit"
+        if question_index == len(questions) - 1:
+            bnext.configure(text="Submit", fg_color="green", hover_color="dark green")
+        if old_index == 0:
+            bback.configure(state="normal")
 
-def last_question():
+
+def back_button_cb(bback: ctk.CTkButton, bnext: ctk.CTkButton):
     global question_index
-    question_index -= 1
-    if question_index < 0:
-        question_index = 0
-        return# disable back button
-    show_question(questions[question_index])
+    old_index = question_index
+    if question_index > 0:
+        question_index -= 1
+        show_question(questions[question_index])
+        # if we have reached the first question, disable the back button
+        if question_index == 0:
+            bback.configure(state="disabled")
+        # if we were at the last question before, set the button back to the default state
+        if old_index == len(questions) - 1:
+            bnext.configure(text="Next", fg_color="blue", hover_color="dark blue")
 
 
 def main():
@@ -79,11 +93,11 @@ def main():
     show_question(questions[question_index])
 
     # back button
-    bt_back = ctk.CTkButton(main_window, text="Back", command=last_question)
+    bt_back = ctk.CTkButton(main_window, text="Back", state="disabled", command=lambda: back_button_cb(bt_back, bt_next))
     bt_back.grid(row=2, column=0, pady=10, sticky="s")
 
     # next button
-    bt_next = ctk.CTkButton(main_window, text="Next Question", command=next_question)
+    bt_next = ctk.CTkButton(main_window, text="Next", command=lambda: next_button_cb(bt_back, bt_next))
     bt_next.grid(row=2, column=1, pady=10, sticky="s")
 
 
