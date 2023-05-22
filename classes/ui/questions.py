@@ -27,15 +27,15 @@ class QuestionMark(Question):
         self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
 
 
-class Questionasdf(Question):
+class QuestionStrongPassword(Question):
     def __init__(self, master):
-        super().__init__(master, "What is your FSST Mark?")
+        super().__init__(master, "Which password is strong?")
 
-        mark_value = tk.IntVar()
-        mark_value.set(5)
-        create_random_mark = lambda: mark_value.set(r.randint(1, 5))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=1, value=1, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=2, value=2, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=3, value=3, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=4, value=4, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
+        self.add(ctk.CTkComboBox(
+            self,
+            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo"),
+            command=self.sel_change
+        ))
+    
+    def sel_change(self, selection):
+        print(selection)

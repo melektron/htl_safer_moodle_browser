@@ -1,3 +1,5 @@
+#! .venv/bin/python
+
 import tkinter as tk
 import tkinter.messagebox as msg
 import customtkinter as ctk
@@ -70,6 +72,7 @@ def main():
     questions = [
         q.QuestionMark(main_window),
         q.QuestionMark(main_window),
+        q.QuestionStrongPassword(main_window),
         q.QuestionMark(main_window),
     ]
 
