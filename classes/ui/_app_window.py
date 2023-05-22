@@ -54,12 +54,13 @@ class AppWindow(ctk.CTk):
         self._questions = questions
         self._show_question(self._questions[self._current_question_index]) # shows first question by default
 
+
     def _close_window_hook(self):
         """
         Method that does weird stuff when the user tries to close
         a window normally
         """
-        msg.showinfo("!!!!", "fu, you won't get rid of me")
+        msg.showinfo("Nonono", "Unfortunately, Safer Moodle Browser 2.0's extensive safety system has blocked the action you are trying to do.")
 
 
     def _real_close_window(self, e=None):
@@ -81,6 +82,7 @@ class AppWindow(ctk.CTk):
         self._current_question = new_question
         self._current_question.grid(row=0, column=0, sticky="nsew", padx=10)
 
+
     def _show_question_answers(self):
         # hide the current question
         if self._current_question is not None:
@@ -96,7 +98,6 @@ class AppWindow(ctk.CTk):
         # show all the answers
         for question in self._questions:
             question.show_correct()
-
         
 
     def _next_button_cb(self):
