@@ -93,7 +93,7 @@ class AppWindow(ctk.CTk):
             self._questions[row].grid(row=row, column=0, sticky="nsew", padx=10)
 
         # make window larger
-        self.question_area.configure(height=800)
+        self.question_area.configure(height=600)
         
         # show all the answers
         for question in self._questions:
