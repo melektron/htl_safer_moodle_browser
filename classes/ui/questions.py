@@ -64,13 +64,15 @@ class QuestionGoingToSchool(Question):
     def __init__(self, master):
         super().__init__(master, "When do you like going to school?")
 
-        self.add(ctk.CTkCheckBox(self, text="Monday", command=self.liked_weekdays, onvalue=1, offvalue=0))
-        self.add(ctk.CTkCheckBox(self, text="Tuesday", command=self.liked_weekdays, onvalue=1, offvalue=0))
-        self.add(ctk.CTkCheckBox(self, text="Wednesday", command=self.liked_weekdays, onvalue=1, offvalue=0))
-        self.add(ctk.CTkCheckBox(self, text="Thursday", command=self.liked_weekdays, onvalue=1, offvalue=0))
-        self.add(ctk.CTkCheckBox(self, text="Friday", command=self.liked_weekdays, onvalue=1, offvalue=0))
-        self.add(ctk.CTkCheckBox(self, text="Saturday", command=self.liked_weekdays, onvalue=1, offvalue=0))
-        self.add(ctk.CTkCheckBox(self, text="Sunday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Monday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Tuesday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Wednesday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Thursday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Friday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Saturday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Sunday", command=self.liked_weekdays))
 
     def liked_weekdays(self): 
-        ...
+        for checkbox in self.elements:
+            checkbox.deselect()
+        messagebox.showinfo("Liar", "Stop lying!!! \nWe all know, that that's not true")
