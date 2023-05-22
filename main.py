@@ -70,6 +70,7 @@ def main():
 
     # Question area
     questions = [
+        q.QuestionSmartPerson(main_window),
         q.QuestionMark(main_window),
         q.QuestionMark(main_window),
         q.QuestionStrongPassword(main_window),
