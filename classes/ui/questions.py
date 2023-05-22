@@ -48,3 +48,16 @@ class QuestionStrongPassword(Question):
             messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
             return False
             
+class QuestionLoading(Question):
+    """
+    A special question that displays a progress bar for calculating results
+    """
+    def __init__(self, master):
+        super().__init__(master, "Calculating results...")
+
+        self._pb_progress = ctk.CTkProgressBar(self, orientation="horizontal")
+        self._pb_progress.grid(row=self.row_id, column=0, padx=10, sticky="we")
+        self.row_id += 1
+    
+    def run_progress(self):
+        self._pb_progress.start()

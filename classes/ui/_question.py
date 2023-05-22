@@ -10,9 +10,13 @@ class Question(ctk.CTkFrame):
 
         super().__init__(master)
 
-        lb_question = ctk.CTkLabel(self, text=self.question_text, anchor="w")
-        lb_question.grid(row=0, column=0, sticky="w")
+        self.grid_columnconfigure(0, weight=1)
 
+        self._lb_question = ctk.CTkLabel(self, text=self.question_text, anchor="w")
+        self._lb_question.grid(row=0, column=0, sticky="w", pady=10, padx=10)
+        # spacer at the end
+        self._lb_spacer = ctk.CTkLabel(self, text="")
+        self._lb_spacer.grid(row=20, column=0) # large row number that is probably never needed
 
 
     def add(self, element: tk.Widget):
@@ -20,7 +24,7 @@ class Question(ctk.CTkFrame):
         Adds a new subelement to the question like a radio button or an entry
         """
         self.elements.append(element)
-        element.grid(row=self.row_id, column=0)
+        element.grid(row=self.row_id, column=0, pady=5, padx=5, sticky="w")
         self.row_id += 1
 
 
