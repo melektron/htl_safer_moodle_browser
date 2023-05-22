@@ -16,7 +16,7 @@ class AppWindow(ctk.CTk):
 
     def __init__(self):
         super().__init__()
-        self.title(".")
+        self.title("Safer Moodle Browser 2.0")
 
         # implement the annoying exit functionality
         # closing the window the normal way will do wired stuff
