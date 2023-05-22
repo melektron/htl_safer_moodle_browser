@@ -75,6 +75,7 @@ def main():
         q.QuestionMark(main_window),
         q.QuestionStrongPassword(main_window),
         q.QuestionMark(main_window),
+        q.QuestionGoingToSchool(main_window),
     ]
 
     show_question(questions[question_index])

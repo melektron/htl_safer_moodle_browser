@@ -58,3 +58,19 @@ class QuestionSmartPerson(Question):
 
     def slider_change(self,value): 
         self.elements[0].configure(text=str(int(value)))
+
+
+class QuestionGoingToSchool(Question): 
+    def __init__(self, master):
+        super().__init__(master, "When do you like going to school?")
+
+        self.add(ctk.CTkCheckBox(self, text="Monday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Tuesday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Wednesday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Thursday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Friday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Saturday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+        self.add(ctk.CTkCheckBox(self, text="Sunday", command=self.liked_weekdays, onvalue=1, offvalue=0))
+
+    def liked_weekdays(self): 
+        ...
