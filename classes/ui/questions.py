@@ -16,40 +16,7 @@ import typing
 from tkinter import messagebox
 import customtkinter as ctk
 
-class QuestionMark(Question):
-    def __init__(self, master):
-        super().__init__(master, "What is your FSST Mark?")
 
-        mark_value = tk.IntVar()
-        mark_value.set(5)
-        create_random_mark = lambda: mark_value.set(r.randint(1, 5))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=1, value=1, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=2, value=2, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=3, value=3, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=4, value=4, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
-
-
-class QuestionStrongPassword(Question):
-    def __init__(self, master):
-        super().__init__(master, "Which password is strong?")
-
-        self.add(ctk.CTkComboBox(
-            self,
-            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo")
-        ))
-        self.add(ctk.CTkButton(self, text="test check", command=self.show_correct))
-    
-    def show_correct(self) -> bool:
-        if self.elements[0].get() == "Matteo":
-            self.elements[0].configure(border_color="green")    
-            messagebox.showinfo(self.question_text, "You are correct!")
-            return True
-        else:
-            self.elements[0].configure(border_color="red")
-            messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
-            return False
-            
 class QuestionLoading(Question):
     """
     A special question that displays a progress bar for calculating results
@@ -70,3 +37,47 @@ class QuestionLoading(Question):
         
         self._pb_progress.start()
         self.after(2200, stopfn)
+
+
+class QuestionMark(Question):
+    def __init__(self, master):
+        super().__init__(master, "What is your FSST Mark?")
+
+        mark_value = tk.IntVar()
+        mark_value.set(5)
+        create_random_mark = lambda: mark_value.set(r.randint(1, 5))
+        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=1, value=1, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=2, value=2, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=3, value=3, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=4, value=4, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
+    
+    def show_correct(self) -> bool:
+        super().show_correct()
+        correct = r.randint(0, 4)
+        for element in self.elements:
+            if str(element.cget("text")) == str(correct):
+                element.configure(text_color="green")
+            else:
+                element.configure(text_color="red")
+
+
+class QuestionStrongPassword(Question):
+    def __init__(self, master):
+        super().__init__(master, "Which password is strong?")
+
+        self.add(ctk.CTkComboBox(
+            self,
+            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo")
+        ))
+    
+    def show_correct(self) -> bool:
+        super().show_correct()
+        if self.elements[0].get() == "Matteo":
+            self.elements[0].configure(border_color="green")    
+            messagebox.showinfo(self.question_text, "You are correct!")
+            return True
+        else:
+            self.elements[0].configure(border_color="red")
+            messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
+            return False
