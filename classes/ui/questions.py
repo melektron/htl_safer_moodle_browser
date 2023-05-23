@@ -68,7 +68,7 @@ class QuestionStrongPassword(Question):
 
         self.add(ctk.CTkComboBox(
             self,
-            values=("", "123456789", "gboquwbg48670OUHhughu#gq#", "abcdef", "Matteo")
+            values=("P@ssw0rd!91", "gboquwbg48670OUHhughu#gq#", "M4tt30#Re1ter", "Matteo")
         ))
     
     def show_correct(self) -> bool:
@@ -81,3 +81,34 @@ class QuestionStrongPassword(Question):
             self.elements[0].configure(border_color="red")
             messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
             return False
+
+
+class QuestionSmartPerson(Question): 
+    def __init__(self, master):
+        super().__init__(master, "Are you smart?")
+
+        self.add(ctk.CTkLabel(self, text="Rate yourself on a scale 1 to 10!"))
+        self.add(ctk.CTkSlider(self,from_=0,to=10,command=self.slider_change,number_of_steps=10))
+
+
+    def slider_change(self,value): 
+        self.elements[0].configure(text=str(int(value)))
+
+
+class QuestionGoingToSchool(Question): 
+    def __init__(self, master):
+        super().__init__(master, "When do you like going to school?")
+
+        self.add(ctk.CTkCheckBox(self, text="Monday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Tuesday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Wednesday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Thursday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Friday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Saturday", command=self.liked_weekdays))
+        self.add(ctk.CTkCheckBox(self, text="Sunday", command=self.liked_weekdays))
+
+    def liked_weekdays(self): 
+        for checkbox in self.elements:
+            checkbox.deselect()
+        messagebox.showinfo("Liar", "Stop lying!!! \nWe all know, that that's not true")
+
