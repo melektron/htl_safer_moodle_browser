@@ -92,6 +92,16 @@ class QuestionSmartPerson(Question):
     def slider_change(self,value): 
         self.elements[0].configure(text=str(int(value)))
 
+    def show_correct(self):
+        super().show_correct()
+        correct=r.randint(0,10)
+
+        if correct == 1: #self.elements[1].get():     
+            self.elements[0].configure(text_color="green")
+        else: 
+            self.elements[0].configure(text_color="red")
+        
+
 
 class QuestionGoingToSchool(Question): 
     def __init__(self, master):
