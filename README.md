@@ -1,6 +1,6 @@
 # Safer Moodle Browser 2.0
 
-A dumb Pythoj CTk demo that behaves weirdly.
+A dumb Python CTk demo that behaves weirdly.
 
 ## How to use it
 
