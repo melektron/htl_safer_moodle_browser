@@ -10,9 +10,34 @@ www.elektron.work
 
 from ._question import Question
 import random as r
+import time as t
 import tkinter as tk
+import typing
 from tkinter import messagebox
 import customtkinter as ctk
+
+
+class QuestionLoading(Question):
+    """
+    A special question that displays a progress bar for calculating results
+    """
+    def __init__(self, master):
+        super().__init__(master, "Calculating results...")
+
+        self._pb_progress = ctk.CTkProgressBar(self, orientation="horizontal", determinate_speed=0.5)
+        self._pb_progress.grid(row=self.row_id, column=0, padx=10, sticky="we")
+        self.row_id += 1
+    
+    def run_progress(self, then: typing.Callable):
+        self._pb_progress.set(0)
+
+        def stopfn():
+            self._pb_progress.stop()
+            then()
+        
+        self._pb_progress.start()
+        self.after(2200, stopfn)
+
 
 class QuestionMark(Question):
     def __init__(self, master):
@@ -26,6 +51,15 @@ class QuestionMark(Question):
         self.add(ctk.CTkRadioButton(self, variable=mark_value, text=3, value=3, command=create_random_mark))
         self.add(ctk.CTkRadioButton(self, variable=mark_value, text=4, value=4, command=create_random_mark))
         self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
+    
+    def show_correct(self) -> bool:
+        super().show_correct()
+        correct = r.randint(0, 4)
+        for element in self.elements:
+            if str(element.cget("text")) == str(correct):
+                element.configure(text_color="green")
+            else:
+                element.configure(text_color="red")
 
 
 class QuestionStrongPassword(Question):
@@ -36,9 +70,9 @@ class QuestionStrongPassword(Question):
             self,
             values=("P@ssw0rd!91", "gboquwbg48670OUHhughu#gq#", "M4tt30#Re1ter", "Matteo")
         ))
-        self.add(ctk.CTkButton(self, text="test check", command=self.show_correct))
     
     def show_correct(self) -> bool:
+        super().show_correct()
         if self.elements[0].get() == "Matteo":
             self.elements[0].configure(border_color="green")    
             messagebox.showinfo(self.question_text, "You are correct!")
@@ -47,7 +81,8 @@ class QuestionStrongPassword(Question):
             self.elements[0].configure(border_color="red")
             messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
             return False
-            
+
+
 class QuestionSmartPerson(Question): 
     def __init__(self, master):
         super().__init__(master, "Are you smart?")
@@ -76,3 +111,4 @@ class QuestionGoingToSchool(Question):
         for checkbox in self.elements:
             checkbox.deselect()
         messagebox.showinfo("Liar", "Stop lying!!! \nWe all know, that that's not true")
+
