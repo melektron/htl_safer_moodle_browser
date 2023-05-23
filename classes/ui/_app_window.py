@@ -51,6 +51,9 @@ class AppWindow(ctk.CTk):
 
     
     def set_questions(self, *questions: Question):
+        """
+        Sets the list of questions to be asked
+        """
         self._questions = questions
         self._show_question(self._questions[self._current_question_index]) # shows first question by default
 
@@ -84,6 +87,9 @@ class AppWindow(ctk.CTk):
 
 
     def _show_question_answers(self):
+        """
+        Shows all questions and their answers
+        """
         # hide the current question
         if self._current_question is not None:
             self._current_question.grid_forget()
@@ -152,7 +158,7 @@ class AppWindow(ctk.CTk):
         # place the fake progress bar and start it
         progress_question = q.QuestionLoading(self.question_area)
         self._show_question(progress_question)
-        progress_question.run_progress(then=self._show_question_answers)
+        progress_question._run_progress(then=self._show_question_answers)
 
 
 

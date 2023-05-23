@@ -4,7 +4,7 @@ import customtkinter as ctk
 
 class Question(ctk.CTkFrame):
     def __init__(self, master, text="??"):
-        self.question_text = text
+        self.question_text: str = text
         self.elements: list[tk.Widget] = []
         self.row_id = 1  # starting at row 1
 

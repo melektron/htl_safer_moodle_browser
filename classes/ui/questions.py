@@ -28,7 +28,7 @@ class QuestionLoading(Question):
         self._pb_progress.grid(row=self.row_id, column=0, padx=10, sticky="we")
         self.row_id += 1
     
-    def run_progress(self, then: typing.Callable):
+    def _run_progress(self, then: typing.Callable):
         self._pb_progress.set(0)
 
         def stopfn():
@@ -43,14 +43,14 @@ class QuestionMark(Question):
     def __init__(self, master):
         super().__init__(master, "What is your FSST Mark?")
 
-        mark_value = tk.IntVar()
-        mark_value.set(5)
-        create_random_mark = lambda: mark_value.set(r.randint(1, 5))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=1, value=1, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=2, value=2, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=3, value=3, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=4, value=4, command=create_random_mark))
-        self.add(ctk.CTkRadioButton(self, variable=mark_value, text=5, value=5, command=create_random_mark))
+        self.mark_value = tk.IntVar()
+        self.mark_value.set(5)
+        create_random_mark = lambda: self.mark_value.set(r.randint(1, 5))
+        self.add(ctk.CTkRadioButton(self, variable=self.mark_value, text=1, value=1, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=self.mark_value, text=2, value=2, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=self.mark_value, text=3, value=3, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=self.mark_value, text=4, value=4, command=create_random_mark))
+        self.add(ctk.CTkRadioButton(self, variable=self.mark_value, text=5, value=5, command=create_random_mark))
     
     def show_correct(self) -> bool:
         super().show_correct()
