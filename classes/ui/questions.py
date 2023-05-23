@@ -75,11 +75,9 @@ class QuestionStrongPassword(Question):
         super().show_correct()
         if self.elements[0].get() == "Matteo":
             self.elements[0].configure(border_color="green")    
-            messagebox.showinfo(self.question_text, "You are correct!")
             return True
         else:
             self.elements[0].configure(border_color="red")
-            messagebox.showinfo(self.question_text, "You are wrong, you WEAK person")
             return False
 
 
@@ -111,4 +109,14 @@ class QuestionGoingToSchool(Question):
         for checkbox in self.elements:
             checkbox.deselect()
         messagebox.showinfo("Liar", "Stop lying!!! \nWe all know, that that's not true")
+
+    def show_correct(self):
+        super().show_correct()
+        for i in range(5):
+            self.elements[i].configure(border_color="red")    
+            
+        self.elements[5].configure(border_color="green")
+        self.elements[6].configure(border_color="green")
+        
+        
 
