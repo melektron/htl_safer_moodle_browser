@@ -12,6 +12,7 @@ def main():
         q.QuestionSmartPerson(main_window.question_area),
         q.QuestionMark(main_window.question_area),
         q.QuestionStrongPassword(main_window.question_area),
+        q.QuestionButtonJump(main_window.question_area),
         q.QuestionGoingToSchool(main_window.question_area)
     )
     main_window.mainloop()

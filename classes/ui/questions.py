@@ -96,10 +96,12 @@ class QuestionSmartPerson(Question):
         super().show_correct()
         correct=r.randint(0,10)
 
-        if correct == 1: #self.elements[1].get():     
+        if correct==self.elements[1].get():     
             self.elements[0].configure(text_color="green")
         else: 
             self.elements[0].configure(text_color="red")
+        
+        self.add(ctk.CTkLabel(self, text="Correct Answer: "+str(correct),text_color="green"))
         
 
 
@@ -130,3 +132,39 @@ class QuestionGoingToSchool(Question):
         
         
 
+class QuestionButtonJump(Question): 
+    def __init__(self, master):
+        super().__init__(master, "Press the button!!!")
+        self.grid_rowconfigure(self.row_id, weight=1)
+        self._counter = 0
+
+        self._jumping_button_frame=ctk.CTkFrame(self)
+        self._jumping_button_frame.grid(sticky="NESW", row=self.row_id, column=0)
+        self.row_id += 1
+        self._jumping_button_frame.grid_columnconfigure((0, 1, 2, 3), weight=1, minsize=150)
+        self._jumping_button_frame.grid_rowconfigure((0, 1, 2, 3), weight=1, minsize=40)
+        self._jumping_button=ctk.CTkButton(self._jumping_button_frame, text="Click ME", command=self._jump)
+        self._jumping_button.grid()
+        self._jumping_button.bind("<Enter>",command=self._maybe_jump)
+
+
+    def _jump(self): 
+        row_config = r.randint(0,3)
+        column_config = r.randint(0,3)
+        self._jumping_button.grid_configure(row=row_config,column=column_config)
+        self._counter += 1
+
+    def _maybe_jump(self, e): 
+        chance = r.randint(0, 1)
+        if chance == 1: 
+            self._jump() 
+
+    def show_correct(self):
+        super().show_correct()
+        
+        self.add(ctk.CTkLabel(self, text="Hit counter: "+str(self._counter)))
+
+        if self._counter >= 10: 
+            self.elements[0].configure(text_color="green")
+        else: 
+            self.elements[0].configure(text_color="red")
